@@ -21,8 +21,8 @@ public class NielWarnProj08 {
         tree1.attachRight(questionFirstNo);
         
         tree2.setRootItem(questionFirstYes);
-        tree2.attachLeft("Is it a cat? (y/n) ");
-        tree2.attachRight("Is it a dog? (y/n) ");
+        tree2.attachLeft("Does it swim? (y/n) ");
+        tree2.attachRight("Does it live underground? (y/n) ");
         
         tree3 = tree1.detachLeftSubtree();
         System.out.println("Tree3 root: " + tree3.getRootItem());
