@@ -6,30 +6,32 @@ import java.util.Scanner;
 public class NielWarnProj08 {
 
     public static void main(String[] args) {
-        String questionRoot = "Does it have legs? (y/n) ";
-        String questionFirstNo = "Is it a snake? (y/n) ";
-        String questionFirstYes = "Is it a cat? (y/n) ";
+        String rootQuestion = "Does it have legs? (y/n) ";
         String response;
+        String newQuestion;
         Boolean finished = false;
 
         BinaryTree tree1 = new BinaryTree();
         BinaryTree tree2 = new BinaryTree();
-        BinaryTree tree3 = new BinaryTree();
+        BinaryTree tree3;
         
-        tree1.setRootItem(questionRoot);
-        tree1.attachLeft(questionFirstYes);
-        tree1.attachRight(questionFirstNo);
-        
-        tree2.setRootItem(questionFirstYes);
-        tree2.attachLeft("Does it swim? (y/n) ");
-        tree2.attachRight("Does it live underground? (y/n) ");
-        
+        tree1.setRootItem(rootQuestion);
+        tree1.attachLeft("cat");
+        tree1.attachRight("snake");
         tree3 = tree1.detachLeftSubtree();
+        
+        tree2.setRootItem("Does it bark? (y/n)");
+        tree2.attachLeft("dog");
+        tree2.attachRight(tree3.getRootItem());
+        
         System.out.println("Tree3 root: " + tree3.getRootItem());
         tree1.attachLeftSubtree(tree2);
         
         System.out.println("Tree1 root: " + tree1.getRootItem());
-        System.out.println("Tree2 root: " + tree2.getRootItem());
+        System.out.println("Tree1 leftChild: " + tree1.root.leftChild.item.toString());
+        System.out.println("Tree1 rightChild: " + tree1.root.rightChild.item.toString());
+        System.out.println("Tree1 leftChildleftChild: " + tree1.root.leftChild.leftChild.item.toString());
+        System.out.println("Tree1 leftChildrightChild: " + tree1.root.leftChild.rightChild.item.toString());
 //        
 //        Scanner input = new Scanner(System.in);
 //        
