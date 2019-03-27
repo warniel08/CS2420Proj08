@@ -11,27 +11,34 @@ public class NielWarnProj08 {
         String newQuestion;
         Boolean finished = false;
 
-        BinaryTree tree1 = new BinaryTree();
-        BinaryTree tree2 = new BinaryTree();
-        BinaryTree tree3;
+        BinaryTree<String> tree1 = new BinaryTree();
         
+//        BinaryTree<String> tree2 = new BinaryTree();
+//        BinaryTree<String> tree3;
+//        
         tree1.setRootItem(rootQuestion);
-        tree1.attachLeft("cat");
-        tree1.attachRight("snake");
-        tree3 = tree1.detachLeftSubtree();
+//        tree1.attachLeft("cat");
+//        tree1.attachRight("snake");
         
-        tree2.setRootItem("Does it bark? (y/n)");
-        tree2.attachLeft("dog");
-        tree2.attachRight(tree3.getRootItem());
-        
-        System.out.println("Tree3 root: " + tree3.getRootItem());
-        tree1.attachLeftSubtree(tree2);
-        
-        System.out.println("Tree1 root: " + tree1.getRootItem());
-        System.out.println("Tree1 leftChild: " + tree1.root.leftChild.item.toString());
-        System.out.println("Tree1 rightChild: " + tree1.root.rightChild.item.toString());
-        System.out.println("Tree1 leftChildleftChild: " + tree1.root.leftChild.leftChild.item.toString());
-        System.out.println("Tree1 leftChildrightChild: " + tree1.root.leftChild.rightChild.item.toString());
+        if (tree1.detachLeftSubtree().isEmpty() && tree1.detachRightSubtree().isEmpty()) {
+            System.out.println("This is a leaf");
+        } else {
+            System.out.println("Not a leaf");
+        }
+//        tree3 = tree1.detachLeftSubtree();
+//        
+//        tree2.setRootItem("Does it bark? (y/n)");
+//        tree2.attachLeft("dog");
+//        tree2.attachRight(tree3.getRootItem());
+//        
+//        System.out.println("Tree3 root: " + tree3.getRootItem());
+//        tree1.attachLeftSubtree(tree2);
+//        
+//        System.out.println("Tree1 root: " + tree1.getRootItem());
+//        System.out.println("Tree1 leftChild: " + tree1.root.leftChild.item);
+//        System.out.println("Tree1 rightChild: " + tree1.root.rightChild.item);
+//        System.out.println("Tree1 leftChildleftChild: " + tree1.root.leftChild.leftChild.item);
+//        System.out.println("Tree1 leftChildrightChild: " + tree1.root.leftChild.rightChild.item);
 //        
 //        Scanner input = new Scanner(System.in);
 //        
