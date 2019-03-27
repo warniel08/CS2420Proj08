@@ -17,14 +17,10 @@ public class NielWarnProj08 {
 //        BinaryTree<String> tree3;
 //        
         tree1.setRootItem(rootQuestion);
-//        tree1.attachLeft("cat");
-//        tree1.attachRight("snake");
+        tree1.attachLeft("cat");
+        tree1.attachRight("snake");
         
-        if (tree1.detachLeftSubtree().isEmpty() && tree1.detachRightSubtree().isEmpty()) {
-            System.out.println("This is a leaf");
-        } else {
-            System.out.println("Not a leaf");
-        }
+        
 //        tree3 = tree1.detachLeftSubtree();
 //        
 //        tree2.setRootItem("Does it bark? (y/n)");
@@ -54,4 +50,7 @@ public class NielWarnProj08 {
 //        } while (!finished);
     }
     
+    public static boolean isLeaf(BinaryTree<String> tree1) {
+            return tree1.detachLeftSubtree().isEmpty() && tree1.detachRightSubtree().isEmpty();
+    }
 }
