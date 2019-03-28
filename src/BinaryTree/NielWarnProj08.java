@@ -34,22 +34,33 @@ public class NielWarnProj08 {
             
             userYesNo(response, input);
             
+            // checks yes or no to first question, does it have legs?
             if (response.equalsIgnoreCase("yes") || response.equalsIgnoreCase("y")) {
+                // if yes, it pushes curr onto the stack
                 treeStack.push(curr);
+                // reassigns curr to left subtree
                 curr = curr.detachLeftSubtree();
+                
+                // loop while curr is not a leaf node
                 while (!isLeaf(curr)) {
+                    // print the new question
                     System.out.print(curr.getRootItem());
+                    // assign response to the user input
                     response = input.nextLine();
+                    // validate user's yes or no response
                     userYesNo(response, input);
-
+                    
+                    // insert the new question into the temp tree
                     insertNewQuestion(response, input, curr, temp);
                 }
                 
+                // while still yes, if curr is a leafNode then guess if single root item
                 if (isLeaf(curr)) {
                     System.out.print("Is it a " + curr.getRootItem() + "? " );
                     response = input.nextLine();
                     userYesNo(response, input);
-
+                    
+                    // use insertNewQuestion in case guess is wrong
                     insertNewQuestion(response, input, curr, temp);
                 }
                 
@@ -98,6 +109,12 @@ public class NielWarnProj08 {
         return curr.detachLeftSubtree().isEmpty();
     }
     
+    /*
+     *  call insertNewQuestion which takes the user response, scanner input
+     *  the curr binaryTree, and a temp binaryTree, manipulates the binaryTrees
+     *  to then give you a binaryTree that has a new question as the root and
+     *  two answers, one left child and one right child
+     */
     public static void insertNewQuestion(String response, Scanner input, 
             BinaryTree<String> curr, BinaryTree<String> temp) {
         String newQuestion, newAnswer;
