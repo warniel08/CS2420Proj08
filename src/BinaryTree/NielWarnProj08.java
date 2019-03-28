@@ -1,4 +1,3 @@
-
 package BinaryTree;
 
 import java.util.Scanner;
@@ -15,11 +14,10 @@ public class NielWarnProj08 {
         Boolean finished = false;
         
         Stack<BinaryTree<String>> treeStack = new Stack<>();
-
         BinaryTree<String> tree1 = new BinaryTree();
-        
         BinaryTree<String> curr = tree1;
-//        
+        BinaryTree<String> temp = new BinaryTree();
+        
         tree1.setRootItem(root1Question);
         tree1.attachLeft(root1LeftAnswer);
         tree1.attachRight(root1RightAnswer);
@@ -27,55 +25,87 @@ public class NielWarnProj08 {
         Scanner input = new Scanner(System.in);
         
         System.out.println("Welcome to the Animal Guessing Computer Learning Game");
+        
         do {
             System.out.println("Think of an animal and I will guess it.");
             System.out.print(tree1.getRootItem());
-            response = input.next();
+            response = input.nextLine();
             
             userYesNo(response, input);
             
             if (response.equalsIgnoreCase("yes") || response.equalsIgnoreCase("y")) {
                 treeStack.push(curr);
                 curr = curr.detachLeftSubtree();
+                System.out.print("Is it a " + curr.getRootItem() + "? " );
+                response = input.nextLine();
+                userYesNo(response, input);
+                
+                insertNewQuestion(response, input, curr, temp);
             } else {
                 treeStack.push(curr);
                 curr = curr.detachRightSubtree();
+                System.out.print("Is it a " + curr.getRootItem() + "? " );
+                response = input.nextLine();
+                userYesNo(response, input);
+                
+                insertNewQuestion(response, input, curr, temp);
             }
             
             System.out.print("Continue? ");
-            response = input.next();
+            response = input.nextLine();
+
             userYesNo(response, input);
             
-            finished = true;
+            if (response.equalsIgnoreCase("yes") || response.equalsIgnoreCase("y")) {
+                finished = false;
+            } else {
+                finished = true;
+            }
+            
         } while (!finished);
-        
-        
-        
-//        tree3 = tree1.detachLeftSubtree();
-//        
-//        tree2.setRootItem("Does it bark? (y/n)");
-//        tree2.attachLeft("dog");
-//        tree2.attachRight(tree3.getRootItem());
-//        
-//        System.out.println("Tree3 root: " + tree3.getRootItem());
-//        tree1.attachLeftSubtree(tree2);
-//        
-//        System.out.println("Tree1 root: " + tree1.getRootItem());
-//        System.out.println("Tree1 leftChild: " + tree1.root.leftChild.item);
-//        System.out.println("Tree1 rightChild: " + tree1.root.rightChild.item);
-//        System.out.println("Tree1 leftChildleftChild: " + tree1.root.leftChild.leftChild.item);
-//        System.out.println("Tree1 leftChildrightChild: " + tree1.root.leftChild.rightChild.item);
     }
     
     public static boolean isLeaf(BinaryTree<String> tree1) {
             return tree1.detachLeftSubtree().isEmpty() && tree1.detachRightSubtree().isEmpty();
     }
     
+    // method returns a boolean, if a tree has a right subtree
+    // then it should attach a left subtree, if not then attach
+    // the tree to the right
+    public static boolean hasRight(BinaryTree<String> tree1) {
+        return tree1.detachLeftSubtree().isEmpty();
+    }
+    
+    public static void insertNewQuestion(String response, Scanner input, 
+            BinaryTree<String> curr, BinaryTree<String> temp) {
+        String newQuestion, newAnswer;
+        if (response.equalsIgnoreCase("yes") || response.equalsIgnoreCase("y")) {
+            System.out.println("I win!");
+
+            System.out.print("Continue? ");
+            response = input.nextLine();
+
+            userYesNo(response, input);
+        } else {
+            System.out.print("I give up. What is it? ");
+            newAnswer = input.nextLine();
+
+            System.out.println("Please type a question whose answer is yes for " + newAnswer +
+                    " and no for " + curr.getRootItem() + ":");
+            newQuestion = input.nextLine();
+
+            temp.setRootItem(newQuestion);
+            temp.attachRight(curr.getRootItem());
+            temp.attachLeft(newAnswer);
+        }
+    }
+    
     public static void userYesNo(String response, Scanner input) {
-        while (!(response.equalsIgnoreCase("yes") || response.equalsIgnoreCase("y") || response.equalsIgnoreCase("no") || response.equalsIgnoreCase("n"))) {
+        while (!(response.equalsIgnoreCase("yes") || response.equalsIgnoreCase("y") || 
+                response.equalsIgnoreCase("no") || response.equalsIgnoreCase("n"))) {
             System.out.println("Not a valid choice");
             System.out.print("Please enter 'yes' or 'no': ");
-            response = input.next();
+            response = input.nextLine();
         }
     }
 }
