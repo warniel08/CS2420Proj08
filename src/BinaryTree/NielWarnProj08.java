@@ -19,15 +19,17 @@ public class NielWarnProj08 {
         BinaryTree<String> curr;
         BinaryTree<String> newTree = new BinaryTree();
 
-        tree1.setRootItem(root1Question.toUpperCase());
-        tree1.attachLeft(root1LeftAnswer.toUpperCase());
-        tree1.attachRight(root1RightAnswer.toUpperCase());
+        
 
         Scanner input = new Scanner(System.in);
 
         System.out.println("Welcome to the Animal Guessing Computer Learning Game");
 
         do {
+            tree1.setRootItem(root1Question.toUpperCase());
+            tree1.attachLeft(root1LeftAnswer.toUpperCase());
+            tree1.attachRight(root1RightAnswer.toUpperCase());
+            
             System.out.println("Think of an animal and I will guess it.");
             curr = tree1;
 
