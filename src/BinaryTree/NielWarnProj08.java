@@ -19,8 +19,6 @@ public class NielWarnProj08 {
         BinaryTree<String> curr;
         BinaryTree<String> newTree = new BinaryTree();
 
-        
-
         Scanner input = new Scanner(System.in);
 
         System.out.println("Welcome to the Animal Guessing Computer Learning Game");
@@ -52,39 +50,55 @@ public class NielWarnProj08 {
             }
 
             // while curr is a leafNode then guess if single root item is curr root item
-            if (isLeaf(curr)) {
-                System.out.print("Is it a " + curr.getRootItem() + "? ");
-                response = input.nextLine();
-                userYesNo(response, input);
+            System.out.print("Is it a " + curr.getRootItem() + "? ");
+            response = input.nextLine();
+            userYesNo(response, input);
 
-                // use insertNewQuestion in case guess is wrong
-                insertNewQuestion(response, input, curr, newTree);
+            // use insertNewQuestion in case guess is wrong
+            if ((response.equalsIgnoreCase("yes") || response.equalsIgnoreCase("y"))) {
+                System.out.println("I win!");
+            } else if (((response.equalsIgnoreCase("no") || response.equalsIgnoreCase("n")))) {
+                insertNewQuestion(input, curr, newTree);
                 curr = newTree;
-
             }
 
             while (!treeStack.isEmpty()) {
                 if (hasRight(treeStack.peek())) {
-                    BinaryTree<String> theRealTemp = treeStack.pop();
-                    theRealTemp.attachLeftSubtree(curr);
-                    curr = theRealTemp;
+                    BinaryTree<String> temp = treeStack.pop();
+                    temp.attachLeftSubtree(curr);
+                    curr = temp;
                 } else {
-                    BinaryTree<String> theRealTemp = treeStack.pop();
-                    theRealTemp.attachRightSubtree(curr);
-                    curr = theRealTemp;
+                    BinaryTree<String> temp = treeStack.pop();
+                    temp.attachRightSubtree(curr);
+                    curr = temp;
                 }
             }
+            
+            System.out.println("Current Binary Tree:");
+            System.out.println("***************");
+            printTree(curr.root);
+            System.out.println("***************");
 
             System.out.print("Continue? ");
             response = input.nextLine();
 
             userYesNo(response, input);
-
-            finished = !(response.equalsIgnoreCase("yes") || response.equalsIgnoreCase("y"));
+            
+            if (response.equalsIgnoreCase("yes") || response.equalsIgnoreCase("y")) {
+                finished = false;
+            } else {
+                finished = true;
+                System.out.println("Saving game status...");
+                
+            }
 
         } while (!finished);
     }
 
+    /*
+     *  method returns a boolean if a node is a LeafNode, it takes
+     *  in a binaryTree and uses it to determine the leafiness of a node
+     */
     public static boolean isLeaf(BinaryTree<String> currTree) {
         BinaryTree<String> tempTreeLeft = currTree.detachLeftSubtree();
         BinaryTree<String> tempTreeRight = currTree.detachRightSubtree();
@@ -99,7 +113,7 @@ public class NielWarnProj08 {
     /*
      *  method returns a boolean, if a tree has a right subtree
      *  then it should attach a left subtree, if not then attach
-     *  the tree to the right
+     *  the tree to the right subtree
      */
     public static boolean hasRight(BinaryTree<String> currTree) {
         BinaryTree<String> tempTreeRight = currTree.detachRightSubtree();
@@ -116,27 +130,29 @@ public class NielWarnProj08 {
      *  to then give you a binaryTree that has a new question as the root and
      *  two answers, one left child and one right child
      */
-    public static void insertNewQuestion(String response, Scanner input,
-            BinaryTree<String> curr, BinaryTree<String> newTree) {
+    public static void insertNewQuestion(Scanner input, BinaryTree<String> curr, BinaryTree<String> newTree) {
         String newQuestion, newAnswer;
         BinaryTree<String> answerTree = new BinaryTree();
-        if ((response.equalsIgnoreCase("yes") || response.equalsIgnoreCase("y")) && isLeaf(curr)) {
-            System.out.println("I win!");
-        } else if (((response.equalsIgnoreCase("no") || response.equalsIgnoreCase("n")) && isLeaf(curr))) {
-            System.out.print("I give up. What is it? ");
-            newAnswer = input.nextLine().toUpperCase();
+        
+        System.out.print("I give up. What is it? ");
+        newAnswer = input.nextLine().toUpperCase();
 
-            System.out.println("Please type a question whose answer is yes for " + newAnswer
-                    + " and no for " + curr.getRootItem() + ":");
-            newQuestion = input.nextLine().toUpperCase() + " ";
+        System.out.println("Please type a question whose answer is yes for " + newAnswer
+                + " and no for " + curr.getRootItem() + ":");
+        newQuestion = input.nextLine().toUpperCase() + " ";
 
-            newTree.setRootItem(newQuestion);
-            newTree.attachRightSubtree(curr);
-            answerTree.setRootItem(newAnswer);
-            newTree.attachLeftSubtree(answerTree);
-        }
+        newTree.setRootItem(newQuestion);
+        newTree.attachRightSubtree(curr);
+        answerTree.setRootItem(newAnswer);
+        newTree.attachLeftSubtree(answerTree);
+        
     }
 
+    /*
+     *  method returns a String, it takes in as parameters a response
+     *  from a user and a scanner input, it validates if a users response
+     *  is anything other than yes or no or y or n
+     */
     public static String userYesNo(String response, Scanner input) {
         while (!(response.equalsIgnoreCase("yes") || response.equalsIgnoreCase("y")
                 || response.equalsIgnoreCase("no") || response.equalsIgnoreCase("n"))) {
@@ -146,5 +162,17 @@ public class NielWarnProj08 {
             return response;
         }
         return response;
+    }
+    
+    /*
+     *  method prints the true in preorder order, it is used mainly 
+     *  debug my code and make sure I get the correct tree attaching/detaching
+     */
+    public static void printTree(TreeNode<String> root) {
+        if (root != null) {
+            System.out.println(root.item);
+            printTree(root.leftChild);
+            printTree(root.rightChild);
+        }
     }
 }
